@@ -11,13 +11,19 @@ class NoteReaderScreen extends StatefulWidget {
 }
 
 class _NoteReaderScreenState extends State<NoteReaderScreen> {
-  TextEditingController _titleControlller = TextEditingController();
-  TextEditingController _mainControlller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _titleControlller = TextEditingController();
+    _titleControlller .text = widget.doc["note_title"];
+    TextEditingController _mainControlller = TextEditingController();
+    _mainControlller.text = widget.doc["note_content"];
+
+    String date = DateTime.now().toString();
+    String docID = widget.doc.id; //not need to add noteid inside the table
     int color_id = widget.doc["colour_id"];
     Color colour = AppStyle.cardsColor[color_id];
+
     return Scaffold(
       backgroundColor: colour,
       appBar: AppBar(
@@ -29,22 +35,61 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
           padding: EdgeInsets.all(16.0),
           child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
 
-            Text(widget.doc["note_title"],style: AppStyle.mainTitle,),
-              SizedBox(height: 4.0),
-            Text(widget.doc["create_date"],style: AppStyle.dateTitle,),
-              SizedBox(height: 28.0),
-            Text(
-              widget.doc["note_content"],style:
-              AppStyle.mainContent,
-              overflow: TextOverflow.ellipsis,
+            Expanded(
+              flex: 1,
+              child: TextField(
+                controller: _titleControlller,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                style: AppStyle.mainTitle,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
+              ),
             ),
             
+
+            Expanded(
+                flex: 1,
+                child: Text(widget.doc["create_date"],style: AppStyle.dateTitle,)
+            ),
+
+            Expanded(
+              flex: 4,
+              child: TextField(
+                controller: _mainControlller,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+              
+              //overflow: TextOverflow.ellipsis,
           ], //Children
-    ),
+        ),
         ),
       ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: AppStyle.accentColor,
+          onPressed: () async{
+            print(docID);
+            FirebaseFirestore.instance.collection('Notes').doc(docID).update({
+              "note_title":_titleControlller.text,
+              "create_date":date,
+              "note_content":_mainControlller.text,
+              "colour_id": color_id,
+            }).then((result){
+              print('Update successfully');
+              Navigator.pop(context);
+            }).catchError((error) =>
+                print("Failed to add new note due to $error"));
+          },
+          child:Icon(Icons.save),
+        )
     );
   }
 }

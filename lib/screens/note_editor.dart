@@ -27,33 +27,43 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
         elevation: 0.0,
         title: Text("Add a new Note",style: TextStyle(color: Colors.white)),
       ),
+      
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              controller: _titleControlller,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Note Title',
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: TextField(
+                controller: _titleControlller,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Title',
+                ),
+                style: AppStyle.mainTitle,
               ),
-              style: AppStyle.mainTitle,
             ),
-            SizedBox(height: 8.0,),
-            Text(date,style:AppStyle.dateTitle),
-            SizedBox(height: 28.0,),
 
-            TextField(
-              controller: _mainControlller,
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Note content',
-              ),
-              style: AppStyle.mainContent,
+            Expanded(
+                flex: 1,
+                child: Text(date,style:AppStyle.dateTitle)
             ),
+              
+            Expanded(
+              flex: 4,
+              child: TextField(
+                  controller: _mainControlller,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Content',
+                  ),
+                  style: AppStyle.mainContent,
+              ),
+            ),
+
           ],
         ),
       ),
