@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:note_taking/style/app_style.dart';
+import 'package:intl/intl.dart';
 
 class NoteEditorScreen extends StatefulWidget {
   const NoteEditorScreen({Key? key}) : super(key: key);
@@ -12,7 +13,6 @@ class NoteEditorScreen extends StatefulWidget {
 
 class _NoteEditorScreenState extends State<NoteEditorScreen> {
   int colour_id = Random().nextInt(AppStyle.cardsColor.length);
-  String date = DateTime.now().toString();
   TextEditingController _titleControlller = TextEditingController();
   TextEditingController _mainControlller = TextEditingController();
 
@@ -47,7 +47,9 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
 
             Expanded(
                 flex: 0,
-                child: Text(date,style:AppStyle.dateTitle)
+                child: Text(
+                    DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
+                    style:AppStyle.dateTitle)
             ),
               
             Expanded(
@@ -72,7 +74,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
           onPressed: () async{
             FirebaseFirestore.instance.collection('Notes').add({
               "note_title":_titleControlller.text,
-              "create_date":date,
+              "create_date":DateTime.now(),
               "note_content":_mainControlller.text,
               "colour_id":colour_id,
             }).then((value){
@@ -84,5 +86,11 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
           child:Icon(Icons.save),
       )
     );
+  }
+  // Convert Firebase timestamp to Flutter date format
+  String timestampToDateString(Timestamp timestamp) {
+    DateTime dateTime = timestamp.toDate();
+    String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(dateTime);
+    return formattedDate;
   }
 }
