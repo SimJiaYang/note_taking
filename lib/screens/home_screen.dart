@@ -36,7 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream:
-                    FirebaseFirestore.instance.collection("Notes").snapshots(),
+                    FirebaseFirestore.
+                    instance.collection("Notes").orderBy('create_date',descending: true).
+                  snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   //Checking the connection state, a progress bar for loading
                   if (snapshot.connectionState == ConnectionState.waiting) {
