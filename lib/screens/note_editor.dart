@@ -34,7 +34,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              flex: 1,
+              flex: 0,
               child: TextField(
                 controller: _titleControlller,
                 decoration: const InputDecoration(
@@ -46,7 +46,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
             ),
 
             Expanded(
-                flex: 1,
+                flex: 0,
                 child: Text(date,style:AppStyle.dateTitle)
             ),
               
