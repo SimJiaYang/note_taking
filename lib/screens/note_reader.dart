@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:note_taking/style/app_style.dart';
 import 'package:quickalert/quickalert.dart';
+import 'package:intl/intl.dart';
 
 class NoteReaderScreen extends StatefulWidget {
   NoteReaderScreen(this.doc, {Key? key}) : super(key: key);
@@ -20,7 +21,6 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
     TextEditingController _mainControlller = TextEditingController();
     _mainControlller.text = widget.doc["note_content"];
 
-    String date = DateTime.now().toString();
     String docID = widget.doc.id; //not need to add noteid inside the table
     int color_id = widget.doc["colour_id"];
     Color colour = AppStyle.cardsColor[color_id];
@@ -84,11 +84,13 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
                 ),
               ),
             ),
-            
 
             Expanded(
                 flex:0,
-                child: Text(widget.doc["create_date"],style: AppStyle.dateTitle,)
+
+                child: Text(
+                  timestampToDateString(widget.doc["create_date"]),
+                  style: AppStyle.dateTitle,)
             ),
 
             Expanded(
@@ -115,7 +117,7 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
             print(docID);
             FirebaseFirestore.instance.collection('Notes').doc(docID).update({
               "note_title":_titleControlller.text,
-              "create_date":date,
+              "create_date":DateTime.now(),
               "note_content":_mainControlller.text,
               "colour_id": color_id,
             }).then((result){
@@ -127,5 +129,11 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
           child:Icon(Icons.save),
         )
     );
+  }
+  // Convert Firebase timestamp to Flutter date format
+  String timestampToDateString(Timestamp timestamp) {
+    DateTime dateTime = timestamp.toDate();
+    String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(dateTime);
+    return formattedDate;
   }
 }

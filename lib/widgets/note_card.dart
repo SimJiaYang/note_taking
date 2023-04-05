@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:note_taking/style/app_style.dart';
+import 'package:intl/intl.dart';
 
 Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc){
   int number = doc["colour_id"];
@@ -18,7 +19,10 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc){
         children: [
           Text(doc["note_title"],style: AppStyle.mainTitle,),
             SizedBox(height: 4.0),
-          Text(doc["create_date"],style: AppStyle.dateTitle,),
+          Text(
+            timestampToDateString(doc["create_date"]),
+            style: AppStyle.dateTitle,
+          ),
             SizedBox(height: 8.0),
           Text(
             doc["note_content"],style:
@@ -29,4 +33,11 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc){
       ),
     ),
   );
+}
+
+// Convert Firebase timestamp to Flutter date format
+String timestampToDateString(Timestamp timestamp) {
+  DateTime dateTime = timestamp.toDate();
+  String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(dateTime);
+  return formattedDate;
 }
