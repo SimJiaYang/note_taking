@@ -40,10 +40,10 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
                 QuickAlert.show(
                   context: context,
                   type: QuickAlertType.confirm,
-                  text: 'Do you want to logout',
+                  text: 'Are you confirm to delete this note?',
                   confirmBtnText: 'Yes',
                   cancelBtnText: 'No',
-                  confirmBtnColor: Colors.green,
+                  confirmBtnColor: Colors.red,
 
                   onConfirmBtnTap: () async {
                     await FirebaseFirestore.instance.
