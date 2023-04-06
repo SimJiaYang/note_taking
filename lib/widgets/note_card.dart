@@ -17,11 +17,12 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc){
       child:Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(doc["note_title"],style: AppStyle.mainTitle,),
+          Text(doc["note_title"],
+            style: AppStyle.mainTitle,overflow: TextOverflow.ellipsis),
             SizedBox(height: 4.0),
           Text(
             timestampToDateString(doc["create_date"]),
-            style: AppStyle.dateTitle,
+            style: AppStyle.dateTitle,overflow: TextOverflow.ellipsis,
           ),
             SizedBox(height: 8.0),
           Text(
