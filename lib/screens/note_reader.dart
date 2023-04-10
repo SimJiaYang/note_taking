@@ -35,7 +35,6 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
 
             IconButton(
               icon: const Icon(Icons.delete),
-              tooltip: 'Go to the next page',
               onPressed: () async {
                 QuickAlert.show(
                   context: context,
