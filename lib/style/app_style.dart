@@ -42,4 +42,31 @@ class AppStyle{
     color: Colors.white,
   );
 
+  static TextStyle test1 = GoogleFonts.nunito(
+    color: Colors.black,
+  );
+
+
+  static const kTextFieldInputDecoration = InputDecoration(
+    filled: true,
+    fillColor: Colors.white,
+    // icon: Icon(
+    //   Icons.search,
+    //   color: Colors.white,
+    // ),
+    hintText: 'Enter Note Content',
+    hintStyle: TextStyle(color: Colors.grey),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(10.0),
+      ),
+      borderSide: BorderSide.none,
+    ),
+  );
+
+  static const kButtonTextStyle = TextStyle(
+    fontSize: 30.0,
+    color: Colors.white,
+  );
+
 }
