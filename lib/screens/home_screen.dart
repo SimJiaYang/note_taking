@@ -42,70 +42,70 @@ void updateSearch(searchTerm){
         backgroundColor: AppStyle.mainColor,
       ),
 
-      body:Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children:[
-                
-                Expanded(
-                  flex:1,
-                  child: TextButton(
-                    onPressed: () async{
-                      var searchNote = '';
-
-                      // print(search);
-                      if(search != null){
-                        updateSearch(searchNote);
-                      }
-
-                    },
-                    child: Text("Your recent notes",
-                      style: AppStyle.subTitle),
-                  ),
+      body:SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children:[
                   
-                ),
+                  Expanded(
+                    flex:1,
+                    child: TextButton(
+                      onPressed: () async{
+                        var searchNote = '';
 
-                Expanded(
-                  flex:0,
-                  child: TextButton(
-                    onPressed: () async{
-                      var searchNote = await Navigator.push(context, MaterialPageRoute(builder: (context){
-                        return SearchScreen();
-                      }));
+                        // print(search);
+                        if(search != null){
+                          updateSearch(searchNote);
+                        }
 
-                      // print(search);
-                      if(searchNote != null){
-                        updateSearch(searchNote);
-                      }
+                      },
+                      child: Text("Your recent notes",
+                        style: AppStyle.subTitle),
+                    ),
+                    
+                  ),
 
-                    },
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.white,
+                  Expanded(
+                    flex:0,
+                    child: TextButton(
+                      onPressed: () async{
+                        var searchNote = await Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return SearchScreen();
+                        }));
+
+                        // print(search);
+                        if(searchNote != null){
+                          updateSearch(searchNote);
+                        }
+
+                      },
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
 
-              ],
-            ),
+                ],
+              ),
 
-            SizedBox(
-              height: 20.0,
-            ),
+              SizedBox(
+                height: 20.0,
+              ),
 
-            testing(search),
+              Expanded(
+                child: 
+                search == '' ? FirebaseConfig(''): FirebaseConfig(search),
+              ),
 
-            Expanded(
-              child: 
-              search == '' ? FirebaseConfig(''): FirebaseConfig(search),
-            ),
-
-          ],
+            ],
+          ),
         ),
       ),
 

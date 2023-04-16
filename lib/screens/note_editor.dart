@@ -28,45 +28,47 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
         title: Text("Add a new Note",style: TextStyle(color: Colors.white)),
       ),
       
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              flex: 0,
-              child: TextField(
-                controller: _titleControlller,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Title',
-                ),
-                style: AppStyle.mainTitle,
-              ),
-            ),
-
-            Expanded(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
                 flex: 0,
-                child: Text(
-                    DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-                    style:AppStyle.dateTitle)
-            ),
-              
-            Expanded(
-              flex: 4,
-              child: TextField(
-                  controller: _mainControlller,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
+                child: TextField(
+                  controller: _titleControlller,
                   decoration: const InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Content',
+                    hintText: 'Title',
                   ),
-                  style: AppStyle.mainContent,
+                  style: AppStyle.mainTitle,
+                ),
               ),
-            ),
 
-          ],
+              Expanded(
+                  flex: 0,
+                  child: Text(
+                      DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
+                      style:AppStyle.dateTitle)
+              ),
+                
+              Expanded(
+                flex: 4,
+                child: TextField(
+                    controller: _mainControlller,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Content',
+                    ),
+                    style: AppStyle.mainContent,
+                ),
+              ),
+
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

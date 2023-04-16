@@ -14,13 +14,7 @@ class FirebaseConfig extends StatefulWidget {
 
 class _FirebaseConfigState extends State<FirebaseConfig> {
   var search;
-  @override
-   didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    search = widget.search;
-    print(search);
-    super.didChangeDependencies();
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +22,6 @@ class _FirebaseConfigState extends State<FirebaseConfig> {
 
       buildNoteGrid(widget.search),
         backgroundColor: AppStyle.mainColor,
-
     );
   }
 }
@@ -36,7 +29,6 @@ class _FirebaseConfigState extends State<FirebaseConfig> {
 List<QueryDocumentSnapshot> searchNotes(String searchTerm, List<QueryDocumentSnapshot> notes) {
 
   return notes.where((note) {
-
     final content = note.get('note_content').toString().toLowerCase();
     return content.contains(searchTerm.toLowerCase());
   }).toList();
@@ -63,30 +55,39 @@ Widget buildNoteGrid(String searchTerm) {
       if (snapshot.hasData) {
         final notes = snapshot.data!.docs;
         final filteredNotes = searchNotes(searchTerm, notes);
-        return GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
 
-          //Get the note length
-          itemCount: filteredNotes.length,
-          itemBuilder: (BuildContext context, int index) {
-            final note = filteredNotes[index];
-            return noteCard(
-                  () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NoteReaderScreen(note),
+        if(filteredNotes.length != 0){
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+
+            //Get the note length
+            itemCount: filteredNotes.length,
+            itemBuilder: (BuildContext context, int index) {
+              final note = filteredNotes[index];
+              return noteCard(
+                    () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NoteReaderScreen(note),
+                  ),
                 ),
-              ),
-              note,
-            );
-          },
-        );
+                note,
+              );
+            },
+          );
+        }
+
+        // Show content no found
+        return Text('Can\'t find the content\n'
+              'Please try again!',
+            style:AppStyle.subTitle,
+          );
       }
-      return Text(
-        "There's is no Notes",
-        style: AppStyle.prompt,
+        return Text(
+          " There's is no Notes",
+          style: AppStyle.prompt,
       );
     },
   );

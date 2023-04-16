@@ -23,27 +23,29 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: AppStyle.mainColor,
       ),
 
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(20.0),
-            child: TextField(
-              style: TextStyle(color: Colors.black),
-              decoration: AppStyle.kTextFieldInputDecoration,
-              onChanged: (String noteValue){
-                searchNotes = noteValue;
-              },
-            ),
-          ),
-              TextButton(
-                onPressed: () {
-                Navigator.pop(context,searchNotes);},
-                  child: Text(
-                    'Get Note',
-                    style: AppStyle.kButtonTextStyle,
-                  ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(20.0),
+              child: TextField(
+                style: TextStyle(color: Colors.black),
+                decoration: AppStyle.kTextFieldInputDecoration,
+                onChanged: (String noteValue){
+                  searchNotes = noteValue;
+                },
               ),
-            ], //Children
+            ),
+                TextButton(
+                  onPressed: () {
+                  Navigator.pop(context,searchNotes);},
+                    child: Text(
+                      'Get Note',
+                      style: AppStyle.kButtonTextStyle,
+                    ),
+                ),
+              ], //Children
+        ),
       ),
     );
   }
