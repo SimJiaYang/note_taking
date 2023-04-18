@@ -46,14 +46,10 @@ class AppStyle{
     color: Colors.black,
   );
 
-
+  // Set the text field style
   static const kTextFieldInputDecoration = InputDecoration(
     filled: true,
     fillColor: Colors.white,
-    // icon: Icon(
-    //   Icons.search,
-    //   color: Colors.white,
-    // ),
     hintText: 'Enter Note Content',
     hintStyle: TextStyle(color: Colors.grey),
     border: OutlineInputBorder(
@@ -64,6 +60,7 @@ class AppStyle{
     ),
   );
 
+  // Set the button style
   static const kButtonTextStyle = TextStyle(
     fontSize: 30.0,
     color: Colors.white,

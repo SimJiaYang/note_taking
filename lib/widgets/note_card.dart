@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:note_taking/style/app_style.dart';
 import 'package:intl/intl.dart';
 
+// Show the
 Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc){
   int number = doc["colour_id"];
   return InkWell(

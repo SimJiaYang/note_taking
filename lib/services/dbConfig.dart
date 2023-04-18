@@ -13,21 +13,22 @@ class FirebaseConfig extends StatefulWidget {
 }
 
 class _FirebaseConfigState extends State<FirebaseConfig> {
+  // Initialize the variable search
   var search;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body:
-
-      buildNoteGrid(widget.search),
+        // Show the note based on the variable search
+        buildNoteGrid(widget.search),
         backgroundColor: AppStyle.mainColor,
     );
   }
 }
 
 List<QueryDocumentSnapshot> searchNotes(String searchTerm, List<QueryDocumentSnapshot> notes) {
-
+  // Get all the notes which contain the 'search' term enter by the user
   return notes.where((note) {
     final content = note.get('note_content').toString().toLowerCase();
     return content.contains(searchTerm.toLowerCase());
@@ -39,36 +40,49 @@ Widget buildNoteGrid(String searchTerm) {
 
   return StreamBuilder<QuerySnapshot>(
 
+    // Show all the result according to the create date by descending
     stream: FirebaseFirestore.instance
         .collection("Notes")
         .orderBy('create_date', descending: true)
         .snapshots(),
     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-      //If the data is loading....
+
+      //If the data is loading.... show the CircularProgress Indicator
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const Center(
           child: CircularProgressIndicator(),
         );
       }
 
-      print(searchTerm);
+
+      // If firebase has data about 'Notes' firebase
       if (snapshot.hasData) {
         final notes = snapshot.data!.docs;
+
+        // Get all the notes which contain the 'search' term enter by the user
         final filteredNotes = searchNotes(searchTerm, notes);
 
+        // If the search result length not equal to zero
         if(filteredNotes.length != 0){
+
+          // Return the gridview
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
             ),
 
-            //Get the note length
+            // Gridview get the note length
             itemCount: filteredNotes.length,
+
+            // Gridview method to build the content
             itemBuilder: (BuildContext context, int index) {
               final note = filteredNotes[index];
+
+              // Return the NoteCard widget
               return noteCard(
                     () => Navigator.push(
                   context,
+                  //
                   MaterialPageRoute(
                     builder: (context) => NoteReaderScreen(note),
                   ),
@@ -85,9 +99,10 @@ Widget buildNoteGrid(String searchTerm) {
             style:AppStyle.subTitle,
           );
       }
+        // Show no content in firebase
         return Text(
           " There's is no Notes",
-          style: AppStyle.prompt,
+          style:AppStyle.subTitle,
       );
     },
   );
