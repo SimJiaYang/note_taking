@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note_taking/style/app_style.dart';
 
+// Use to derive the text only - debug usage
 class testing extends StatefulWidget {
   const testing(this.search ,{Key? key}) : super(key: key);
   final search;

@@ -82,7 +82,7 @@ Widget buildNoteGrid(String searchTerm) {
               return noteCard(
                     () => Navigator.push(
                   context,
-                  //
+                  // Push to the NoteReader Screen
                   MaterialPageRoute(
                     builder: (context) => NoteReaderScreen(note),
                   ),
